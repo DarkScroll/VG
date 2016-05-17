@@ -59,9 +59,10 @@ var/religion_name = null
 	return capitalize(name)
 
 /proc/new_station_name()
-	var/random = rand(1,5)
-	var/name = ""
-
+//	var/random = rand(1,5)
+	var/name = "Harroway Station"
+	station_name = name
+/*
 	//Rare: Pre-Prefix
 	if (prob(10))
 		name = pick("Imperium", "Heretical", "Cuban", "Psychic", "Elegant", "Common", "Uncommon", "Rare", "Unique", "Houseruled", "Religious", "Atheist", "Traditional", "Houseruled", "Mad", "Super", "Ultra", "Secret", "Top Secret", "Deep", "Death", "Zybourne", "Central", "Main", "Government", "Uoi", "Fat", "Automated", "Experimental", "Augmented")
@@ -105,7 +106,7 @@ var/religion_name = null
 		if(13)
 			station_name += pick("13","XIII","Thirteen")
 
-
+*/
 	if (config && config.server_name)
 		world.name = "[config.server_name]: [name]"
 	else
