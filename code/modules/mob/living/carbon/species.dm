@@ -426,6 +426,108 @@ var/global/list/whitelisted_species = list("Human")
 
 	return ..(filter.FilterSpeech(speech), H)
 
+
+/datum/species/vulpkanin
+	name = "Vulpkanin"
+	//name_plural = "Vulpkanin"
+	icobase = 'icons/mob/human_races/r_vulpkanin.dmi'
+	deform = 'icons/mob/human_races/r_vulpkanin.dmi'
+	//path = /mob/living/carbon/human/vulpkanin
+	default_language = "Galactic Common"
+	language = "Canilunzt"
+	//primitive_form = "Wolpin"
+	primitive = /mob/living/carbon/monkey/tajara
+	tail = "vulptail"
+	//unarmed_type = /datum/unarmed_attack/claws
+	attack_verb = "scratches"
+	darksight = 8
+	punch_damage = 2
+
+	cold_level_1 = 200 //Default 260
+	cold_level_2 = 140 //Default 200
+	cold_level_3 = 80 //Default 120
+
+	heat_level_1 = 330 //Default 360
+	heat_level_2 = 380 //Default 400
+	heat_level_3 = 800 //Default 1000
+	/*
+	blurb = "Vulpkanin are a species of sharp-witted canine-pideds residing on the planet Altam just barely within the \
+	dual-star Vazzend system. Their politically de-centralized society and independent natures have led them to become a species and \
+	culture both feared and respected for their scientific breakthroughs. Discovery, loyalty, and utilitarianism dominates their lifestyles \
+	to the degree it can cause conflict with more rigorous and strict authorities. They speak a guttural language known as 'Canilunzt' \
+    which has a heavy emphasis on utilizing tail positioning and ear twitches to communicate intent."
+    */
+
+
+	flags = HAS_LIPS | HAS_UNDERWEAR | HAS_TAIL | IS_WHITELISTED
+	//bodyflags = FEET_PADDED | HAS_TAIL | HAS_HEAD_ACCESSORY | HAS_MARKINGS | HAS_SKIN_COLOR | TAIL_WAGGING | HAS_FUR
+	//dietflags = DIET_OMNI
+	//reagent_tag = PROCESS_ORG
+	flesh_color = "#966464"
+	base_color = "#B43214"
+
+	default_mutations=list(M_CLAWS)
+/*
+	allowed_consumed_mobs = list(/mob/living/simple_animal/mouse, /mob/living/simple_animal/lizard, /mob/living/simple_animal/chick, /mob/living/simple_animal/chicken,
+								 /mob/living/simple_animal/crab, /mob/living/simple_animal/butterfly, /mob/living/simple_animal/parrot, /mob/living/simple_animal/tribble)
+
+	suicide_messages = list(
+		"is attempting to bite their tongue off!",
+		"is jamming their claws into their eye sockets!",
+		"is twisting their own neck!",
+		"is holding their breath!")
+*/
+	var/datum/speech_filter/filter = new
+
+	has_organ = list(
+		"heart" =    /datum/organ/internal/heart,
+		"lungs" =    /datum/organ/internal/lungs,
+		"liver" =    /datum/organ/internal/liver,
+		"kidneys" =  /datum/organ/internal/kidney,
+		"brain" =    /datum/organ/internal/brain,
+		"appendix" = /datum/organ/internal/appendix,
+		"eyes" =     /datum/organ/internal/eyes/tajaran
+	)
+/*
+/datum/species/vulpkanin/handle_death(var/mob/living/carbon/human/H)
+	H.stop_tail_wagging(1)
+	*/
+/datum/species/vulpkanin/New()
+	// Combining all the worst shit the world has ever offered.
+
+	// Note: Comes BEFORE other stuff.
+	// Trying to remember all the stupid fucking furry memes is hard
+	filter.addPickReplacement("\b(asshole|comdom|shitter|shitler|retard|dipshit|dipshit|greyshirt|nigger)",
+		list(
+			"silly rabbit",
+			"sandwich", // won't work too well with plurals OH WELL
+			"recolor",
+			"party pooper"
+		)
+	)
+	filter.addWordReplacement("me","meow")
+	filter.addWordReplacement("I","meow") // Should replace with player's first name.
+	filter.addReplacement("fuck","yiff")
+	filter.addReplacement("shit","scat")
+	filter.addReplacement("scratch","scritch")
+	filter.addWordReplacement("(help|assist)\\bmeow","kill meow") // help me(ow) -> kill meow
+	filter.addReplacement("god","gosh")
+	filter.addWordReplacement("(ass|butt)", "rump")
+
+/datum/species/vulpkanin/handle_speech(var/datum/speech/speech, mob/living/carbon/human/H)
+	if (prob(15))
+		speech.message = ""
+
+		if (prob(50))
+			speech.message = pick("GOD, PLEASE", "NO, GOD", "AGGGGGGGH") + " "
+
+		speech.message += pick("KILL ME", "END MY SUFFERING", "I CAN'T DO THIS ANYMORE")
+
+		return ..(speech, H)
+
+	return ..(filter.FilterSpeech(speech), H)
+
+
 /datum/species/grey // /vg/
 	name = "Grey"
 	icobase = 'icons/mob/human_races/r_grey.dmi'
