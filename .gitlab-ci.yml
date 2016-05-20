@@ -2,7 +2,7 @@ image: "debian"
 
 variables:
     BYOND_MAJOR: "510"
-    BYOND_MINOR: "1314"
+    BYOND_MINOR: "1341"
     DM_MAPFILE1: "tgstation"
 
 cache:
