@@ -67,18 +67,20 @@
 		. = i
 		i = findtext(Haystack, Needle, i + 1, End)
 
-//Removes a few problematic characters
-/proc/sanitize_simple(var/t,var/list/repl_chars = list("\n"="#","\t"="#","ï¿½"="ï¿½"))
+//Removes a ÿ (cp1251)
+/proc/sanitize_simple(t,list/repl_chars = list("ÿ"="____255_","\n"="#","\t"="#"))
 	for(var/char in repl_chars)
 		var/index = findtext(t, char)
 		while(index)
 			t = copytext(t, 1, index) + repl_chars[char] + copytext(t, index+1)
-			index = findtext(t, char)
+			index = findtext(t, char, index+1)
 	return t
 
 //Runs byond's sanitization proc along-side sanitize_simple
-/proc/sanitize(var/t,var/list/repl_chars = null)
-	return html_encode(sanitize_simple(t,repl_chars))
+/proc/sanitize(t,list/repl_chars = null)
+	t = html_encode(trim(sanitize_simple(t, repl_chars)))
+	t = replacetext(t, "____255_", "&#255;")//cp1251
+	return t
 
 //Runs sanitize and strip_html_simple
 //I believe strip_html_simple() is required to run first to prevent '<' from displaying as '&lt;' after sanitize() calls byond's html_encode()
@@ -111,8 +113,6 @@
 		switch(text2ascii(text, i))
 			if(62, 60, 92, 47)
 				return // rejects the text if it contains these bad characters: <, >, \ or /
-			if(127 to 255)
-				return // rejects weird letters like ï¿½
 			if(0 to 31)
 				return // more weird stuff
 			if(32)
@@ -473,3 +473,43 @@ var/list/number_units=list(
 
 ///mob/verb/test_num2words(var/number as num)
 //	to_chat(usr, "\"[jointext(num2words(number), " ")]\"")
+
+
+//latin sanitization for some reasons
+/proc/sanitize_o(t,list/repl_chars = null)
+	t = html_encode(trim(sanitize_simple_o(t, repl_chars)))
+	return t
+
+/proc/sanitize_simple_o(t,list/repl_chars = list("\n"="#","\t"="#"))
+	for(var/char in repl_chars)
+		var/index = findtext(t, char)
+		while(index)
+			t = copytext(t, 1, index) + repl_chars[char] + copytext(t, index+1)
+			index = findtext(t, char, index+1)
+	return t
+
+//unicode sanitization
+/proc/sanitize_u(t,list/repl_chars = null)
+	t = html_encode(sanitize_simple(t,repl_chars))
+	t = replacetext(t, "____255_", "&#1103;")
+	return t
+
+//convertion cp1251 to unicode
+/proc/sanitize_a2u(t)
+	t = replacetext(t, "&#255;", "&#1103;")
+	return t
+
+//convertion unicode to cp1251
+/proc/sanitize_u2a(t)
+	t = replacetext(t, "&#1103;", "&#255;")
+	return t
+
+//clean sanitize cp1251
+/proc/sanitize_a0(t)
+	t = replacetext(t, "ÿ", "&#255;")
+	return t
+
+//clean sanitize unicode
+/proc/sanitize_u0(t)
+	t = replacetext(t, "ÿ", "&#1103;")
+	return t
