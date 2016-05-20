@@ -995,6 +995,10 @@ var/list/slot_equipment_priority = list( \
 
 	if(istype(loc,/obj/mecha)) return
 
+	if(isVentCrawling())
+		to_chat(src, "<span class='danger'>Not while we're vent crawling!</span>")
+		return
+
 	if(hand)
 		var/obj/item/W = l_hand
 		if (W)
@@ -1795,6 +1799,14 @@ mob/proc/on_foot()
 	if(jitteriness)
 		jitteriness = 0
 		animate(src)
+
+//High order proc to remove a mobs spell channeling, removes channeling fully
+/mob/proc/remove_spell_channeling()
+	if(spell_channeling)
+		var/spell/thespell = on_uattack.handlers[spell_channeling][EVENT_OBJECT_INDEX]
+		thespell.channel_spell(force_remove = 1)
+		return 1
+	return 0
 
 #undef MOB_SPACEDRUGS_HALLUCINATING
 #undef MOB_MINDBREAKER_HALLUCINATING

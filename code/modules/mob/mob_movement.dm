@@ -45,6 +45,9 @@
 
 
 /client/Northwest()
+	if(mob.remove_spell_channeling()) //Interrupt to remove spell channeling on dropping
+		to_chat(usr, "<span class='notice'>You cease waiting to use your power")
+		return
 	if(iscarbon(usr))
 		var/mob/living/carbon/C = usr
 		if(!C.get_active_hand())
@@ -152,7 +155,7 @@
 
 
 
-/client/verb/attack_self()
+/client/verb/attack_self() //Called when pagedown or Z is pressed
 	set hidden = 1
 	if(mob)
 		mob.mode()
