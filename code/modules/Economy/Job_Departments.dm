@@ -1,4 +1,4 @@
-var/list/station_departments = list("Command", "Medical", "Engineering", "Science", "Security", "Cargo", "Civilian")
+var/list/station_departments = list("Command", "Medical", "Engineering", "Research", "Security", "Cargo", "Civilian")
 
 // The department the job belongs to.
 /datum/job/var/department = null
@@ -57,12 +57,12 @@ var/list/station_departments = list("Command", "Medical", "Engineering", "Scienc
 
 /datum/job/psychiatrist/department = "Medical"
 
-/datum/job/rd/department = "Science"
+/datum/job/rd/department = "Research"
 /datum/job/rd/head_position = 1
 
-/datum/job/scientist/department = "Science"
+/datum/job/scientist/department = "Research"
 
-/datum/job/roboticist/department = "Science"
+/datum/job/roboticist/department = "Research"
 
 /datum/job/hos/department = "Security"
 /datum/job/hos/head_position = 1
