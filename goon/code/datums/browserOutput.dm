@@ -256,5 +256,5 @@ For the main html chat area
 				return
 
 		message = replacetext(message, "\n", "<br>")
-
+		message = sanitize_a2u(message)
 		target << output(url_encode(message), "browseroutput:output")
