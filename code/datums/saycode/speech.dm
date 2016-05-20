@@ -78,7 +78,7 @@
 		lquote="\""
 	if(!rquote)
 		rquote="\""
-	rendered="<span class='[jointext(message_classes, " ")]'>[lquote][html_encode(rendered)][rquote]</span>"
+	rendered="<span class='[jointext(message_classes, " ")]'>[lquote][sanitize(rendered)][rquote]</span>"
 	if(language)
 		rendered=language.render_speech(src, rendered)
 	else
