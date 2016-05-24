@@ -38,11 +38,11 @@
 
 turf/unsimulated/wall/splashscreen
 	name = "Space Station 13"
-	icon = null
-	icon_state = null
+	icon = 'icons/splashworks/title0.dmi' // null
+	icon_state = "title" //null
 	layer = FLY_LAYER
 	canSmoothWith = null
-
+/*
 	New()
 		var/path = "icons/splashworks/"
 		var/list/filenames = flist(path)
@@ -50,7 +50,7 @@ turf/unsimulated/wall/splashscreen
 			if(copytext(filename, length(filename)) == "/")
 				filenames -= filename
 		icon = file("[path][pick(filenames)]")
-
+*/
 /turf/unsimulated/wall/other
 	icon_state = "r_wall"
 	canSmoothWith = null

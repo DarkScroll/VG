@@ -46,7 +46,8 @@ var/global/datum/controller/gameticker/ticker
 #define LOBBY_TICKING 1
 #define LOBBY_TICKING_RESTARTED 2
 /datum/controller/gameticker/proc/pregame()
-	var/oursong = file(pick(
+	var/oursong = file('sound/music/century21march.ogg') /* file(pick(
+
 		"sound/music/space.ogg",
 		"sound/music/traitor.ogg",
 		"sound/music/space_oddity.ogg",
@@ -61,7 +62,10 @@ var/global/datum/controller/gameticker/ticker
 		"sound/music/whatisthissong.ogg",
 		"sound/music/space_asshole.ogg",
 		"sound/music/starman.ogg",
+
+		"sound/music/century21march.ogg"
 		))
+		*/
 	login_music = fcopy_rsc(oursong)
 	// Wait for MC to get its shit together
 	while(!master_controller.initialized)
